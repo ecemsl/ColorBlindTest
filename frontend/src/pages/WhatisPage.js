@@ -28,7 +28,7 @@ function WhatisPage() {
 
                 <Card className="mb-4 mt-4 shadow-sm">
                     <Card.Body>
-                        <Card.Title>How Color Vision Works</Card.Title>
+                        <Card.Title className="mt-1 mb-2 text-center">How Color Vision Works</Card.Title>
                         <Card.Text>
                             Inside your eye, there are special cells called photoreceptors on the retina. There are two main types:
                             <ul>
@@ -48,7 +48,7 @@ function WhatisPage() {
 
                 <Card className="mb-4 shadow-sm">
                     <Card.Body>
-                        <Card.Title>What Causes Color Blindness? & Types of Color Blindness </Card.Title>
+                        <Card.Title className="mt-1 mb-2 text-center">What Causes Color Blindness? & Types of Color Blindness </Card.Title>
                         <Row>
                             <Col md={7}>
                                 <Card.Text>
@@ -82,7 +82,7 @@ function WhatisPage() {
                     </Card.Body>
                 </Card>
                 
-                <h4 className="mt-5 mb-3 text-center">See How Colors Appear with Different Types of Color Blindness</h4>
+                <h3 className="mt-5 mb-3 text-center">See How Colors Appear with Different Types of Color Blindness</h3>
                 <Row className="g-4">
                     <Col md={4}>
                         <Card className="shadow-sm">
