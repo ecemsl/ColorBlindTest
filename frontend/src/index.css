@@ -1,0 +1,19 @@
+
+body {
+  margin: 0;
+  font-family:  'Roboto Flex','Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Roboto Condensed' 
+}
+
+code {
+  font-family:  'Orbitron', source-code-pro, Menlo, Monaco, Consolas, 'Orbitron', 'Courier New',
+    monospace;
+}

@@ -1,0 +1,20 @@
+const express = require('express');
+const router = express.Router();
+const { pool } = require('../DB');
+
+router.get('/', async (req, res) => {
+  try {
+    const result = await pool.request()
+      .query(`
+        SELECT id, user_name, date, time, num_questions, num_correct_answers, status
+        FROM Tests
+        ORDER BY date DESC
+      `);
+    res.json(result.recordset);
+  } catch (err) {
+    console.error('Error fetching test results:', err);
+    res.status(500).json({ error: 'Failed to retrieve test results' });
+  }
+});
+
+module.exports = router;
