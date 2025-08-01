@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+
 
 function WhatisPage() {
+    const [showProtanopia, setShowProtanopia] = useState(false);
+    const [showDeuteranopia, setShowDeuteranopia] = useState(false);
+    const [showTritanopia, setShowTritanopia] = useState(false);
+
     return (
         <div>
             <div
@@ -75,6 +81,69 @@ function WhatisPage() {
                         </Row>
                     </Card.Body>
                 </Card>
+                
+                <h4 className="mt-5 mb-3 text-center">See How Colors Appear with Different Types of Color Blindness</h4>
+                <Row className="g-4">
+                    <Col md={4}>
+                        <Card className="shadow-sm">
+                            <Card.Body className="text-center">
+                                <Card.Title>Protanopia</Card.Title>
+                                <Form.Check
+                                    type="switch"
+                                    label={showProtanopia ? 'Color Blind View' : 'Normal View'}
+                                    checked={showProtanopia}
+                                    onChange={() => setShowProtanopia(!showProtanopia)}
+                                    className="mb-3"
+                                />
+                                <img
+                                    src={showProtanopia ? '/images/protan.png' : '/images/normal.jpg'}
+                                    alt="Protanopia Comparison"
+                                    className="img-fluid"
+                                />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+
+                    <Col md={4}>
+                        <Card className="shadow-sm">
+                            <Card.Body className="text-center">
+                                <Card.Title>Deuteranopia</Card.Title>
+                                <Form.Check
+                                    type="switch"
+                                    label={showDeuteranopia ? 'Color Blind View' : 'Normal View'}
+                                    checked={showDeuteranopia}
+                                    onChange={() => setShowDeuteranopia(!showDeuteranopia)}
+                                    className="mb-3"
+                                />
+                                <img
+                                    src={showDeuteranopia ? "/images/deutan.png" : "/images/normal.jpg"}
+                                    alt="Deuteranopia Comparison"
+                                    className="img-fluid"
+                                />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+
+                    <Col md={4}>
+                        <Card className="shadow-sm">
+                            <Card.Body className="text-center">
+                                <Card.Title>Tritanopia</Card.Title>
+                                <Form.Check
+                                    type="switch"
+                                    label={showTritanopia ? 'Color Blind View' : 'Normal View'}
+                                    checked={showTritanopia}
+                                    onChange={() => setShowTritanopia(!showTritanopia)}
+                                    className="mb-3"
+                                />
+                                <img
+                                    src={showTritanopia ? '/images/tritan.png' : '/images/normal.jpg'}
+                                    alt="Tritanopia Comparison"
+                                    className="img-fluid"
+                                />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
             </Container>
         </div>
     );
