@@ -48,7 +48,7 @@ function ResultsPage() {
 
     return (
         <Container className="mt-4">
-            <h2>All Test Results</h2>
+            <h1 className="text-center">All Test Results</h1>
             <div style={{ marginBottom: '20px' }}>
                 <Button onClick={() => navigate('/taketest')}>New Test</Button>
             </div>

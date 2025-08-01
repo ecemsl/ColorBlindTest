@@ -28,7 +28,7 @@ function NavbarComponent() {
                                 More
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href="/typesof">Types of Color Blindness</Dropdown.Item>
+                                <Dropdown.Item href="/whatis">What is Color Blindness?</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Nav>

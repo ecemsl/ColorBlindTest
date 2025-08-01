@@ -126,7 +126,7 @@ function QuestionsPage() {
 
   return (
     <Container className="mt-4">
-      <h2>All Questions</h2>
+      <h1 className="text-center">All Questions</h1>
       <div style={{ position: 'sticky', top: '0', zIndex: 9999 }}>
         {alert.show && (
           <Alert variant={alert.variant} onClose={() => setAlert({ ...alert, show: false })} dismissible>

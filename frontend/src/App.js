@@ -9,7 +9,7 @@ import QuestionPage from './pages/QuestionPage.js';
 import FinishedPage from './pages/FinishedPage.js';
 import { TestSessionProvider } from './pages/TestSessionContext.js';
 import NavbarComponent from './components/NavbarComponent.js';
-import TypesofPage from './pages/TypesofPage.js';
+import WhatisPage from './pages/WhatisPage.js';
 
 import HomePage from './pages/HomePage.js';
 
@@ -25,7 +25,7 @@ function App() {
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/taketest/question/:index" element={<QuestionPage />} />
           <Route path="/taketest/finished" element={<FinishedPage />} />
-          <Route path="/typesof" element={<TypesofPage />} />
+          <Route path="/whatis" element={<WhatisPage />} />
 
 
         </Routes>
