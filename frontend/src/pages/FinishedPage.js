@@ -5,8 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/esm/Container';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Card from 'react-bootstrap/Card';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+
 
 function FinishedPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -20,6 +19,13 @@ function FinishedPage() {
 
     const session = JSON.parse(sessionStorage.getItem('testSession'));
 
+    const startTime = session.startTime;
+
+    const endTime = new Date().getTime();
+    const timeTakenMs = endTime - startTime;
+    const timeTakenMinutes = Math.floor(timeTakenMs / 60000);
+    const timeTakenSeconds = Math.floor((timeTakenMs % 60000) / 1000);
+
     if (!session || session.submitted) {
       setSubmitted(true);
       setResult(session?.latestResult || null);
@@ -29,6 +35,7 @@ function FinishedPage() {
     const payload = {
       user_name: session.userName,
       time: session.time,
+      time_taken: timeTakenMs,
       num_questions: session.numQuestions,
       answers: session.questions.map((q, i) => ({
         question_id: q.id,
@@ -44,7 +51,9 @@ function FinishedPage() {
           status: res.data.status,
           user_name: session.userName,
           date: new Date().toLocaleString(),
-          time: session.time
+          time: session.time,
+          timeTakenMinutes,
+          timeTakenSeconds
         };
 
         console.log('Response data:', res.data);
@@ -68,46 +77,50 @@ function FinishedPage() {
   return (
     <Container className="mt-4">
       <Card className="shadow rounded-4 p-4 mx-auto" style={{ maxWidth: '700px' }}>
-      <h2>Test Results</h2>
-      {result ? (
-        <div style={{ maxWidth: '600px', marginTop: '20px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-            <div>
-              <label>Name</label>
-              <input value={result.user_name} disabled style={{ width: '100%' }} />
+        <h2>Test Results</h2>
+        {result ? (
+          <div style={{ maxWidth: '600px', marginTop: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div>
+                <label>Name</label>
+                <input value={result.user_name} disabled style={{ width: '100%' }} />
+              </div>
+              <div>
+                <label>Test Date</label>
+                <input value={result.date} disabled style={{ width: '100%' }} />
+              </div>
+              <div>
+                <label>Number of Questions</label>
+                <input value={result.total} disabled style={{ width: '100%' }} />
+              </div>
+              <div>
+                <label>Status</label>
+                <input value={result.status} disabled style={{ width: '100%' }} />
+              </div>
+              <div>
+                <label>Number of Correct Answers</label>
+                <input value={result.correct} disabled style={{ width: '100%' }} />
+              </div>
+              <div>
+                <label>Time (in minutes)</label>
+                <input value={result.time} disabled style={{ width: '100%' }} />
+              </div>
+              <div>
+                <label>Time Taken To Finish The Test</label>
+                <input value={`${result.timeTakenMinutes} minutes ${result.timeTakenSeconds} seconds`} disabled style={{ width: '100%' }} />
+              </div>
+              <div>
+                <label>Status</label>
+                <ProgressBar now={(result.correct / result.total) * 100} />
+              </div>
             </div>
-            <div>
-              <label>Test Date</label>
-              <input value={result.date} disabled style={{ width: '100%' }} />
-            </div>
-            <div>
-              <label>Number of Questions</label>
-              <input value={result.total} disabled style={{ width: '100%' }} />
-            </div>
-            <div>
-              <label>Status</label>
-              <input value={result.status} disabled style={{ width: '100%' }} />
-            </div>
-            <div>
-              <label>Number of Correct Answers</label>
-              <input value={result.correct} disabled style={{ width: '100%' }} />
-            </div>
-            <div>
-              <label>Time (in minutes)</label>
-              <input value={result.time} disabled style={{ width: '100%' }} />
-            </div>
-            <div>
-              <label>Status</label>
-              <ProgressBar now={(result.correct/result.total)*100} />
+            <div style={{ marginTop: '20px' }}>
+              <Button onClick={() => navigate('/results')}>See All Results</Button>
             </div>
           </div>
-          <div style={{ marginTop: '20px' }}>
-            <Button onClick={() => navigate('/results')}>See All Results</Button>
-          </div>
-        </div>
-      ) : (
-        <p>Submitting your test...</p>
-      )}
+        ) : (
+          <p>Submitting your test...</p>
+        )}
 
       </Card>
     </Container>

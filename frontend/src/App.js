@@ -10,7 +10,6 @@ import FinishedPage from './pages/FinishedPage.js';
 import { TestSessionProvider } from './pages/TestSessionContext.js';
 import NavbarComponent from './components/NavbarComponent.js';
 import WhatisPage from './pages/WhatisPage.js';
-
 import HomePage from './pages/HomePage.js';
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
           <Route path="/taketest/question/:index" element={<QuestionPage />} />
           <Route path="/taketest/finished" element={<FinishedPage />} />
           <Route path="/whatis" element={<WhatisPage />} />
-
 
         </Routes>
       </TestSessionProvider>

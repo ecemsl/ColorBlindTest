@@ -1,5 +1,5 @@
 const express = require('express');
-const multer = require('multer');
+const multer = require('multer'); //for form data
 const path = require('path');
 const router = express.Router();
 const { pool } = require('../DB.js');
@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// GET /api/questions – List all questions with choices
+// GET /api/questions to List all questions with choices
 router.get('/', async (req, res) => {
   try {
     const questionsResult = await pool.request()

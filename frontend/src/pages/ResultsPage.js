@@ -46,6 +46,16 @@ function ResultsPage() {
         );
     }
 
+
+    const formatTimeTaken = (ms) => {
+        if (!ms) return '-';
+        const minutes = Math.floor(ms / 60000);
+        const seconds = Math.floor((ms % 60000) / 1000);
+        return `${minutes}m ${seconds}s`;
+    };
+
+    
+
     return (
         <Container className="mt-4">
             <h1 className="text-center">All Test Results</h1>
@@ -62,7 +72,8 @@ function ResultsPage() {
                             <tr>
                                 <th>User</th>
                                 <th>Date</th>
-                                <th>Time (mins)</th>
+                                <th>Time Allowed</th>
+                                <th>Time Taken</th>
                                 <th>Questions</th>
                                 <th>Correct</th>
                                 <th>Status</th>
@@ -74,11 +85,12 @@ function ResultsPage() {
                                 <tr key={r.id}>
                                     <td>{r.user_name}</td>
                                     <td>{new Date(r.date).toLocaleString()}</td>
-                                    <td>{r.time}</td>
+                                    <td style={{ width: '10%' }}>{`${r.time}m`}</td>
+                                    <td>{formatTimeTaken(r.time_taken)}</td>
                                     <td>{r.num_questions}</td>
                                     <td>{r.num_correct_answers}</td>
                                     <td>{r.status}</td>
-                                    <td  style={{ width: '20%' }}>
+                                    <td style={{ width: '20%' }}>
                                         <ProgressBar
                                             now={(r.num_correct_answers / r.num_questions) * 100}
                                             style={{ width: '100%' }}

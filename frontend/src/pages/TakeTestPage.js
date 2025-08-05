@@ -5,7 +5,6 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
-import Modal from 'react-bootstrap/Modal';
 import { useTestSession } from './TestSessionContext';
 
 function TakeTestPage() {
@@ -21,6 +20,7 @@ function TakeTestPage() {
     setAnswers,
     setTimeAllowed,
     setEndTime,
+    setStartTime,
     setHasSubmitted,
   } = useTestSession();
 
@@ -42,25 +42,30 @@ function TakeTestPage() {
       return;
     }
 
-
     try {
       const res = await getTestQuestions(numQuestions);
       const questions = res.data;
 
-      const now = new Date().getTime();
-      const endTime = now + parseInt(time) * 60 * 1000;
+      const startTime = new Date().getTime();
+      const endTime = startTime + parseInt(time) * 60 * 1000;
 
+
+      //update testsessioncontext
       setCtxUserName(userName);
       setQuestions(questions);
       setAnswers(new Array(questions.length).fill(''));
       setTimeAllowed(parseInt(time));
       setEndTime(endTime);
+      setStartTime(startTime);
 
+
+      //***save session data to browser's sessionstorage***
       const sessionData = {
         userName,
         numQuestions: questions.length,
         time: parseInt(time),
         endTime,
+        startTime,
         questions,
         answers: [],
       };
@@ -80,9 +85,9 @@ function TakeTestPage() {
 
       {alert.show && (
         <Alert
-        variant={alert.variant}
-        onClose={() => setAlert({ ...alert, show: false })}
-        dismissible
+          variant={alert.variant}
+          onClose={() => setAlert({ ...alert, show: false })}
+          dismissible
         >
           {alert.message}
         </Alert>
@@ -90,7 +95,7 @@ function TakeTestPage() {
       <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '70vh' }}>
         <div className="p-4 rounded-4  shadow" style={{ backgroundColor: 'white', width: '100%', maxWidth: '1000px' }}>
 
-      <h2 style={{textAlign: "center"}}>Start Color Blind Test</h2>
+          <h2 style={{ textAlign: "center" }}>Start Color Blind Test</h2>
           <Form>
             <Form.Group className="mb-3" controlId="formName">
               <Form.Label>Name</Form.Label>

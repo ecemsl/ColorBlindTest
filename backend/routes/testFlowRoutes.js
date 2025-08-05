@@ -27,7 +27,7 @@ router.get('/testquestions/:count', async (req, res) => {
     res.status(200).json(questions);
   } catch (err) {
     console.error('Error in /testflow/testquestions:', err);
-    res.status(500).json({ error: 'Failed to retrieve test questions' });
+    res.status(500).json({ error: 'Failed to retrieve test questions.' });
   }
 });
 

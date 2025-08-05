@@ -10,6 +10,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 function QuestionPage() {
+
   const { index } = useParams();
   const i = parseInt(index);
   const navigate = useNavigate();
@@ -29,6 +30,14 @@ function QuestionPage() {
     setEndTime
   } = useTestSession();
 
+
+
+  console.log('index from params:', index);
+  console.log('parsed index:', i);
+  console.log('questions:', questions);
+  console.log('questions[i]:', questions[i]);
+
+
   useEffect(() => {
     const storedSession = JSON.parse(sessionStorage.getItem('testSession'));
     const storedEndTime = sessionStorage.getItem('endTime');
@@ -42,18 +51,13 @@ function QuestionPage() {
       setEndTime(parseInt(storedEndTime));
     }
 
-    if ((!storedSession || !storedSession.questions || !storedSession.answers) && !questions.length) {
-      navigate('/');
+    if ((!storedSession || !storedSession.questions || !storedSession.answers) && (!questions.length || !questions[i])) {
+      navigate('/taketest');
     }
-  }, [questions, setAnswers, navigate, setQuestions, setEndTime]);
+  }, [questions, i, navigate, setAnswers, setQuestions, setEndTime]);
 
-  if (!questions.length || !questions[i]) {
-    return (
-      <Container className="mt-4">
-        <h4>Loading question...</h4>
-      </Container>
-    );
-  }
+
+
 
   const question = questions[i];
   const selected = answers[i] || '';
@@ -82,18 +86,23 @@ function QuestionPage() {
     }
   };
 
+
+  if (!questions.length || !questions[i]) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <Container className="mt-4">
 
       <div style={{ position: 'sticky', top: '0', zIndex: 9999 }}>
         {alert.show && (
-        <Alert variant={alert.variant} onClose={() => setAlert({ ...alert, show: false })} dismissible>
-          {alert.message}
-        </Alert>
-      )}
+          <Alert variant={alert.variant} onClose={() => setAlert({ ...alert, show: false })} dismissible>
+            {alert.message}
+          </Alert>
+        )}
 
       </div>
-      
+
       <Row className="align-items-start justify-content-between mb-3">
         <Col className="text-end">
           <CountdownTimer onTimeUp={() => navigate('/taketest/finished')} />

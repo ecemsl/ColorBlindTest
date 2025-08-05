@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getQuestions, addQuestion, updateQuestions } from '../services/api';
-import QuestionCard from '../components/QuestionCard'; 
+import QuestionCard from '../components/QuestionCard';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/esm/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -15,7 +15,7 @@ function QuestionsPage() {
   const [showForm, setShowForm] = useState(false);
   const [questionText, setQuestionText] = useState('');
   const [rightAnswer, setRightAnswer] = useState('');
-  const [choices, setChoices] = useState(['', '', '', '']);
+  const [choices, setChoices] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -52,19 +52,33 @@ function QuestionsPage() {
   };
 
   const handleSubmit = async () => {
+    
+    
+    if (!questionText.trim() || !rightAnswer.trim() || !imageFile)  {
+      showAlert('danger', 'Please fill all fields.');
+      return;
+    }
+    
+    const nonEmptyChoices = choices.filter(choice => choice.trim() !== '');
+    if (nonEmptyChoices.length === 0) {
+      showAlert('danger', 'Please add at least one non-empty choice.');
+      return;
+    }
+    
+    if (!nonEmptyChoices.includes(rightAnswer.trim())) {
+      showAlert('danger', 'Correct answer must match one of the choices.');
+      return;
+    }
+    
+
     const formData = new FormData();
     formData.append('question_text', questionText);
     formData.append('right_answer', rightAnswer);
     if (imageFile) formData.append('image', imageFile)
-    choices.forEach((choice, index) => {
+    nonEmptyChoices.forEach((choice, index) => {
       formData.append(`choices[${index}]`, choice);
     });
-
-    if (!questionText | !rightAnswer | !imageFile | !choices) {
-      showAlert('danger', 'Please fill all fields.');
-      return;
-    }
-
+    
     try {
       if (editMode && editId !== null) {
         await updateQuestions(editId, formData);
@@ -80,7 +94,6 @@ function QuestionsPage() {
       fetchQuestions();
     } catch (err) {
       showAlert('danger', 'Error submitting question.');
-
       console.error(err);
     }
   };
@@ -92,7 +105,7 @@ function QuestionsPage() {
     setQuestionText('');
     setRightAnswer('');
     setImageFile(null);
-    setChoices(['', '', '', '']);
+    setChoices([]);
   };
 
   const handleEdit = (question) => {
@@ -134,7 +147,7 @@ function QuestionsPage() {
           </Alert>
         )}
       </div>
-      <Button style={{ marginBottom: '20px' }}  onClick={() => setShowForm(!showForm)}>
+      <Button style={{ marginBottom: '20px' }} onClick={() => setShowForm(!showForm)}>
         {showForm ? 'Cancel' : 'Add New Question'}
       </Button>
       {showForm && (

@@ -9,6 +9,11 @@ export const TestSessionProvider = ({ children }) => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [timeAllowed, setTimeAllowed] = useState(0);
+  const [startTime, setStartTime]=  useState(() => {
+  const stored = sessionStorage.getItem('startTime');
+  return stored ? parseInt(stored) : null;
+});
+
   const [endTime, setEndTime] = useState(() => {
     const stored = sessionStorage.getItem('endTime');
     return stored ? parseInt(stored) : null;
@@ -38,6 +43,8 @@ export const TestSessionProvider = ({ children }) => {
         setAnswers,
         timeAllowed,
         setTimeAllowed,
+        startTime,
+        setStartTime,
         hasSubmitted,
         setHasSubmitted,
         endTime,
