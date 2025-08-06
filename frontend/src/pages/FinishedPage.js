@@ -45,6 +45,7 @@ function FinishedPage() {
 
     submitTest(payload)
       .then((res) => {
+        
         const resultData = {
           correct: res.data.num_correct_answers,
           total: session.numQuestions,
@@ -72,6 +73,8 @@ function FinishedPage() {
         console.error('Error submitting test:', err);
         setSubmitted(true);
       });
+
+
   }, []);
 
   return (

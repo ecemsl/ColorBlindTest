@@ -14,7 +14,7 @@ export const addQuestion = (formData) =>
         }
     });
 
-export const updateQuestions = (id, formData) =>
+export const updateQuestion = (id, formData) =>
     API.put(`/questions/${id}`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'

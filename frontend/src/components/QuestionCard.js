@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { updateQuestions, deleteQuestion } from '../services/api';
+import { updateQuestion, deleteQuestion } from '../services/api';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -21,7 +21,7 @@ function QuestionCard({ question, refresh, showAlert }) {
     choices.forEach((choice, i) => formData.append(`choices[${i}]`, choice));
 
     try {
-      await updateQuestions(question.id, formData);
+      await updateQuestion(question.id, formData);
       showAlert('success', 'Saved!');
       setIsEditing(false);
       refresh();

@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+  database:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: database
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./backend/BD.sql:/docker-entrypoint-initdb.d/BD.sql
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    environment:
+      - DB_USER=sa
+      - DB_PASSWORD=YourStrong!Passw0rd
+      - DB_SERVER=database
+      - DB_DATABASE=YourDatabaseName
+    ports:
+      - "3001:3001"
+    depends_on:
+      - database
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+  
+  db-init:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - database
+    volumes:
+      - ./backend/BD.sql:/BD.sql
+    entrypoint: /bin/bash
+    command: |
+      sleep 20
+      /opt/mssql-tools/bin/sqlcmd -S database -U sa -P 'YourStrong!Passw0rd' -i /BD.sql

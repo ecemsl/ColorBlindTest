@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// GET /api/questions to List all questions with choices
+// GET /api/questions to List all questions with choices *******************************
 router.get('/', async (req, res) => {
   try {
     const questionsResult = await pool.request()
@@ -44,7 +44,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// POST /api/questions
+// POST /api/questions**************************************
 router.post('/', upload.single('image'), async (req, res) => {
   const { question_text, right_answer } = req.body;
   const choices = Array.isArray(req.body.choices)
@@ -85,6 +85,8 @@ router.post('/', upload.single('image'), async (req, res) => {
 });
 
 
+
+// UPDATE /api/questions****************************
 router.put('/:id', upload.single('image'), async (req, res) => {
   const questionId = req.params.id;
   const { question_text, right_answer } = req.body;
@@ -137,7 +139,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
 });
 
 
-// DELETE /api/questions/:id
+// DELETE /api/questions/:id************************************
 router.delete('/:id', async (req, res) => {
   const id = parseInt(req.params.id);
   if (!id) return res.status(400).json({ error: 'Invalid ID' });
