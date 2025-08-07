@@ -21,7 +21,7 @@ function ResultsPage() {
     const fetchResults = async () => {
         try {
             const res = await getResults();
-            const sorted = res.data.sort((a, b) => new Date(b.date) - new Date(a.date));
+            const sorted = res.data;
             setResults(sorted);
         } catch (err) {
             console.error('Error fetching results:', err);
@@ -85,7 +85,7 @@ function ResultsPage() {
                                 <tr key={r.id}>
                                     <td>{r.user_name}</td>
                                     <td>{new Date(r.date).toLocaleString()}</td>
-                                    <td style={{ width: '10%' }}>{`${r.time}m`}</td>
+                                    <td style={{ width: '10%' }}>{!r.time ? '-':`${r.time}m`}</td>
                                     <td>{formatTimeTaken(r.time_taken)}</td>
                                     <td>{r.num_questions}</td>
                                     <td>{r.num_correct_answers}</td>
