@@ -2,7 +2,7 @@
 
 1. Open **SQL Server Management Studio (SSMS)**
 2. Create a new database
-3. Open `DB.sql` inside backend and run it to populate tables and data
+3. Open `DB.sql` inside the backend folder and run it to populate tables and data
 4. Make sure your `.env` file has the correct settings for your local SQL Server:
 
 
