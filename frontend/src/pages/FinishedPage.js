@@ -48,8 +48,8 @@ function FinishedPage() {
         
         const resultData = {
           correct: res.data.num_correct_answers,
-          total: session.numQuestions,
           status: res.data.status,
+          total: session.numQuestions,
           user_name: session.userName,
           date: new Date().toLocaleString(),
           time: session.time,
