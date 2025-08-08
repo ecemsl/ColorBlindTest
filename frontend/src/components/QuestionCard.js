@@ -132,7 +132,7 @@ function QuestionCard({ question, refresh, showAlert }) {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Upload Image (optional)</Form.Label>
+            <Form.Label>Upload Image</Form.Label>
             <Form.Control
               type="file"
               onChange={(e) => setImageFile(e.target.files[0])}

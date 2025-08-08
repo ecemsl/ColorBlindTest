@@ -1,16 +1,10 @@
-version: '3.9'
-
 services:
   backend:
     build: ./backend
     ports:
       - '3001:3001'
-    environment:
-      - DB_USER=ecm
-      - DB_PASSWORD=Yeter123
-      - DB_SERVER=host.docker.internal\\SQLEXPRESS
-      - DB_DATABASE=ColorBlindTest
-      - DB_PORT=1433
+    env_file:
+      - ./backend/.env
     depends_on:
       - frontend
 

@@ -9,23 +9,16 @@ export const TestSessionProvider = ({ children }) => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [timeAllowed, setTimeAllowed] = useState(0);
-  const [startTime, setStartTime]=  useState(() => {
-  const stored = sessionStorage.getItem('startTime');
-  return stored ? parseInt(stored) : null;
-});
+
+  const [startTime, setStartTime] = useState(() => {
+    const stored = sessionStorage.getItem('startTime');
+    return stored ? parseInt(stored) : null;
+  });
 
   const [endTime, setEndTime] = useState(() => {
     const stored = sessionStorage.getItem('endTime');
     return stored ? parseInt(stored) : null;
   });
-
-  const initialSubmitted = sessionStorage.getItem('hasSubmitted') === 'true';
-  const [hasSubmitted, setHasSubmittedState] = useState(initialSubmitted);
-
-  const setHasSubmitted = (val) => {
-    setHasSubmittedState(val);
-    sessionStorage.setItem('hasSubmitted', val.toString());
-  };
 
   const setEndTimeSafe = (val) => {
     setEndTime(val);
@@ -45,8 +38,6 @@ export const TestSessionProvider = ({ children }) => {
         setTimeAllowed,
         startTime,
         setStartTime,
-        hasSubmitted,
-        setHasSubmitted,
         endTime,
         setEndTime: setEndTimeSafe
       }}

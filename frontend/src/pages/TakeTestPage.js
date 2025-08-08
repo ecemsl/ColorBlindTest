@@ -20,8 +20,7 @@ function TakeTestPage() {
     setAnswers,
     setTimeAllowed,
     setEndTime,
-    setStartTime,
-    setHasSubmitted,
+    setStartTime
   } = useTestSession();
 
   const showAlert = (variant, message) => {
@@ -31,9 +30,7 @@ function TakeTestPage() {
 
   useEffect(() => {
     sessionStorage.removeItem('testSession');
-    sessionStorage.removeItem('hasSubmitted');
     sessionStorage.removeItem('endTime');
-    setHasSubmitted(false);
   }, []);
 
   const handleStartTest = async () => {
@@ -52,11 +49,11 @@ function TakeTestPage() {
 
       //update testsessioncontext
       setCtxUserName(userName);
-      setQuestions(questions);
-      setAnswers(new Array(questions.length).fill(''));
       setTimeAllowed(parseInt(time));
       setEndTime(endTime);
       setStartTime(startTime);
+      setQuestions(questions);
+      setAnswers(new Array(questions.length).fill(''));
 
 
       //***save session data to browser's sessionstorage***
@@ -68,6 +65,7 @@ function TakeTestPage() {
         startTime,
         questions,
         answers: [],
+        submitted: false, 
       };
       sessionStorage.setItem('testSession', JSON.stringify(sessionData));
       sessionStorage.setItem('endTime', endTime.toString());

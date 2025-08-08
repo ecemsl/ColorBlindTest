@@ -32,12 +32,6 @@ function QuestionPage() {
 
 
 
-  console.log('index from params:', index);
-  console.log('parsed index:', i);
-  console.log('questions:', questions);
-  console.log('questions[i]:', questions[i]);
-
-
   useEffect(() => {
     const storedSession = JSON.parse(sessionStorage.getItem('testSession'));
     const storedEndTime = sessionStorage.getItem('endTime');
