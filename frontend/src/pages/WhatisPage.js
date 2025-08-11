@@ -7,9 +7,9 @@ import Form from 'react-bootstrap/Form';
 
 
 function WhatisPage() {
-    const [showProtanopia, setShowProtanopia] = useState(false);
-    const [showDeuteranopia, setShowDeuteranopia] = useState(false);
-    const [showTritanopia, setShowTritanopia] = useState(false);
+    const [showProtan, setShowProtan] = useState(false);
+    const [showDeuteran, setShowDeuteran] = useState(false);
+    const [showTritan, setShowTritan] = useState(false);
 
     return (
         <div>
@@ -90,13 +90,13 @@ function WhatisPage() {
                                 <Card.Title>Protanopia</Card.Title>
                                 <Form.Check
                                     type="switch"
-                                    label={showProtanopia ? 'Color Blind View' : 'Normal View'}
-                                    checked={showProtanopia}
-                                    onChange={() => setShowProtanopia(!showProtanopia)}
+                                    label={showProtan ? 'Color Blind View' : 'Normal View'}
+                                    checked={showProtan}
+                                    onChange={() => setShowProtan(!showProtan)}
                                     className="mb-3"
                                 />
                                 <img
-                                    src={showProtanopia ? '/images/protan.png' : '/images/normal.jpg'}
+                                    src={showProtan ? '/images/protan.png' : '/images/normal.jpg'}
                                     alt="Protanopia Comparison"
                                     className="img-fluid"
                                 />
@@ -110,13 +110,13 @@ function WhatisPage() {
                                 <Card.Title>Deuteranopia</Card.Title>
                                 <Form.Check
                                     type="switch"
-                                    label={showDeuteranopia ? 'Color Blind View' : 'Normal View'}
-                                    checked={showDeuteranopia}
-                                    onChange={() => setShowDeuteranopia(!showDeuteranopia)}
+                                    label={showDeuteran ? 'Color Blind View' : 'Normal View'}
+                                    checked={showDeuteran}
+                                    onChange={() => setShowDeuteran(!showDeuteran)}
                                     className="mb-3"
                                 />
                                 <img
-                                    src={showDeuteranopia ? "/images/deutan.png" : "/images/normal.jpg"}
+                                    src={showDeuteran ? "/images/deutan.png" : "/images/normal.jpg"}
                                     alt="Deuteranopia Comparison"
                                     className="img-fluid"
                                 />
@@ -130,13 +130,13 @@ function WhatisPage() {
                                 <Card.Title>Tritanopia</Card.Title>
                                 <Form.Check
                                     type="switch"
-                                    label={showTritanopia ? 'Color Blind View' : 'Normal View'}
-                                    checked={showTritanopia}
-                                    onChange={() => setShowTritanopia(!showTritanopia)}
+                                    label={showTritan ? 'Color Blind View' : 'Normal View'}
+                                    checked={showTritan}
+                                    onChange={() => setShowTritan(!showTritan)}
                                     className="mb-3"
                                 />
                                 <img
-                                    src={showTritanopia ? '/images/tritan.png' : '/images/normal.jpg'}
+                                    src={showTritan ? '/images/tritan.png' : '/images/normal.jpg'}
                                     alt="Tritanopia Comparison"
                                     className="img-fluid"
                                 />

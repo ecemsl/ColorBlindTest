@@ -30,18 +30,26 @@ function TakeTestPage() {
 
   useEffect(() => {
     sessionStorage.removeItem('testSession');
-    sessionStorage.removeItem('endTime');
   }, []);
 
   const handleStartTest = async () => {
-    if (!userName | !numQuestions | !time) {
+    if (!userName || !numQuestions || !time) {
       showAlert('danger', 'Please fill all fields.');
       return;
     }
 
+    
+
     try {
       const res = await getTestQuestions(numQuestions);
       const questions = res.data;
+
+      if(questions.length < parseInt(numQuestions, 10)) {showAlert(
+        'danger',
+        `Available number of questions exceeded. ${questions.length} question(s) are available.`
+      );
+      return;
+    }
 
       const startTime = new Date().getTime();
       const endTime = startTime + parseInt(time) * 60 * 1000;
@@ -68,7 +76,6 @@ function TakeTestPage() {
         submitted: false, 
       };
       sessionStorage.setItem('testSession', JSON.stringify(sessionData));
-      sessionStorage.setItem('endTime', endTime.toString());
       navigate('/taketest/question/0');
 
     } catch (err) {

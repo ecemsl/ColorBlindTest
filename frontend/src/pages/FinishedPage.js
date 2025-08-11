@@ -26,7 +26,7 @@ function FinishedPage() {
     const timeTakenMinutes = Math.floor(timeTakenMs / 60000);
     const timeTakenSeconds = Math.floor((timeTakenMs % 60000) / 1000);
 
-    if (!session || session.submitted) {
+    if (!session || session.submitted) { //if submitted before
       setSubmitted(true);
       setResult(session?.latestResult || null);
       return;

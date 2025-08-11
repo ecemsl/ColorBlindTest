@@ -11,7 +11,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 function ResultsPage() {
     const [results, setResults] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 12;
+    const itemsPerPage = 10;
     const navigate = useNavigate();
 
     useEffect(() => {

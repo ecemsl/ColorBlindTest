@@ -3,21 +3,36 @@ import { useLocation } from 'react-router-dom';
 import { useTestSession } from '../pages/TestSessionContext';
 
 const CountdownTimer = ({ onTimeUp }) => {
-  const { endTime } = useTestSession();
+  const { endTime: ctxEndTime } = useTestSession();
   const [timeLeft, setTimeLeft] = useState(0);
   const location = useLocation();
 
+
+  const resolveEndTime = () => {
+    if (ctxEndTime) return Number(ctxEndTime);
+    try {
+      const sess = JSON.parse(sessionStorage.getItem('testSession') || '{}');
+      return typeof sess.endTime === 'number' ? sess.endTime : null;
+    } catch {
+      return null;
+    }
+  };
+
+
   useEffect(() => {
-    if (!endTime) {
+
+    const end = resolveEndTime();
+
+    if (!end) {
       console.log('No endTime found.');
       return;
     }
 
-    console.log('endTime from context:', endTime);
+    console.log('endTime from context:', end);
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
-      const remaining = Math.max(0, Math.floor((endTime - now) / 1000));
+      const remaining = Math.max(0, Math.floor((end - now) / 1000));
       setTimeLeft(remaining);
 
       if (remaining <= 0) {
@@ -27,7 +42,7 @@ const CountdownTimer = ({ onTimeUp }) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [endTime, location]);
+  }, [ctxEndTime, location, onTimeUp]);
 
   const formatTime = () => {
     const mins = Math.floor(timeLeft / 60);

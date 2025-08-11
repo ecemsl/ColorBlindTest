@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
         SELECT id, user_name, date, time, time_taken, num_questions, num_correct_answers, status
         FROM Tests
         ORDER BY 
-        CAST(num_correct_answers AS FLOAT) / NULLIF(num_questions, 0) DESC, time_taken ASC
+        CAST(num_correct_answers AS FLOAT) / NULLIF(num_questions, 0) ASC, time_taken DESC
       `);
     res.json(result.recordset);
   } catch (err) {

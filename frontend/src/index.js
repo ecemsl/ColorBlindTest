@@ -5,7 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// hard-migrate away from the legacy key
+sessionStorage.removeItem('endTime');
+
 root.render(
+  
   <React.StrictMode>
     <App />
   </React.StrictMode>

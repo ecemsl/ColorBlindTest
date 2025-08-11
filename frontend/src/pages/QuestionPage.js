@@ -34,8 +34,9 @@ function QuestionPage() {
 
   useEffect(() => {
     const storedSession = JSON.parse(sessionStorage.getItem('testSession'));
-    const storedEndTime = sessionStorage.getItem('endTime');
+    const storedEndTime = storedSession.endTime; //************/
 
+    
     if (!questions.length && storedSession && storedSession.questions && storedSession.answers) {
       setAnswers(storedSession.answers);
       setQuestions(storedSession.questions);
