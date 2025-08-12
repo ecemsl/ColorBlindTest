@@ -115,7 +115,7 @@ function QuestionPage() {
         {question.image_url && (
           <div className="text-center mb-4">
             <img
-              src={`http://localhost:3001${question.image_url}`}
+              src={`http://localhost:3001${question.image_url}`} //imageurls in database: /images/.jpg
               alt="question"
               style={{ maxWidth: '200px', width: '100%' }}
             />

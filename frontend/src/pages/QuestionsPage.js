@@ -157,7 +157,7 @@ function QuestionsPage() {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label>Image File (optional)</Form.Label>
+                  <Form.Label>Image File</Form.Label>
                   <Form.Control
                     type="file"
                     accept="image/*"
