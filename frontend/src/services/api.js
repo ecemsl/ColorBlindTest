@@ -29,3 +29,7 @@ export const getResults = () => API.get('/results');
 export const getTestQuestions = (count) => API.get(`/testflow/testquestions/${count}`);
 
 export const submitTest = (testData) => API.post('/tests', testData);
+
+export const generateImage = ({ prompt, output_format = 'webp', model = 'ultra' }) =>
+  API.post('/images/generate', { prompt, output_format, model });
+

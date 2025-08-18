@@ -10,3 +10,4 @@ DB_PASSWORD=YourPassword
 DB_SERVER=host.docker.internal
 DB_DATABASE=ColorBlindTest
 DB_PORT=1450
+STABILITY_API_KEY=

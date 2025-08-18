@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getQuestions, addQuestion } from '../services/api';
+import { getQuestions, addQuestion, generateImage } from '../services/api';
 import QuestionCard from '../components/QuestionCard';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/esm/Container';
@@ -21,6 +21,9 @@ function QuestionsPage() {
   const [alert, setAlert] = useState({ variant: '', message: '', show: false });
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2;
+
+  const [genLoading, setGenLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const showAlert = (variant, message) => {
     setAlert({ variant, message, show: true });
@@ -70,6 +73,7 @@ function QuestionsPage() {
     }
 
 
+
     const formData = new FormData();
     formData.append('question_text', questionText);
     formData.append('right_answer', rightAnswer);
@@ -88,6 +92,43 @@ function QuestionsPage() {
       console.error(err);
     }
   };
+
+  const handleGenerateImage = async () => {
+    try {
+      setGenLoading(true);
+
+      const res = await generateImage({
+        prompt: questionText?.trim() || 'ishihara color blindness test plates, white backgorund',
+        output_format: 'webp',
+        model: 'ultra'
+      }); // POST /api/images/generate
+      const { imageBase64, format } = res.data;
+
+      // Optional: see the size
+      console.log('len', imageBase64?.length, imageBase64?.slice(0, 30));
+
+      // base64 → Blob → File
+      const bytes = Uint8Array.from(atob(imageBase64), c => c.charCodeAt(0));
+      const mime = `image/${format || 'png'}`;
+      const blob = new Blob([bytes], { type: mime });
+
+      // Give it a real filename; some backends rely on this
+      const file = new File([blob], `generated.${format || 'png'}`, { type: mime });
+
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(blob));
+      showAlert('success', 'Image generated and attached.');
+    } catch (e) {
+      console.error(e);
+      showAlert('danger', 'Image generation failed.');
+      console.error(e);
+      const msg = e?.response?.data?.details || e?.response?.data?.error || e.message || 'Image generation failed.';
+      showAlert('danger', msg);
+    } finally {
+      setGenLoading(false);
+    }
+  };
+
 
   const resetForm = () => {
     setShowForm(false);
@@ -117,7 +158,6 @@ function QuestionsPage() {
   }
 
   return (
-
     <Container className="mt-4">
       <h1 className="text-center">All Questions</h1>
       {questions.length === 0 ? (<p>No questions found.</p>) : (
@@ -156,6 +196,16 @@ function QuestionsPage() {
                   />
                 </Form.Group>
 
+                <Button className="mb-3" onClick={handleGenerateImage} disabled={genLoading}>  {genLoading ? 'Generating…' : 'Generate Image'}</Button>
+                {imagePreview && (
+                  <div className="mb-3">
+                    <img
+                      src={imagePreview}
+                      alt="Generated preview"
+                      style={{ maxWidth: 240, borderRadius: 8, display: 'block' }}
+                    />
+                  </div>
+                )}
                 <Form.Group className="mb-3">
                   <Form.Label>Image File</Form.Label>
                   <Form.Control
