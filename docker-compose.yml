@@ -3,6 +3,8 @@ services:
     build: ./backend
     ports:
       - '3001:3001'
+    volumes:
+      - images_data:/app/public/images
     env_file:
       - ./backend/.env
     environment:
@@ -12,6 +14,7 @@ services:
       DB_DATABASE: ColorBlindTest
       DB_PORT: "1450"
 
+    command: npm run dev
     depends_on:
       - frontend
 
@@ -19,3 +22,6 @@ services:
     build: ./frontend
     ports:
       - '3000:3000'
+      
+volumes:
+  images_data:

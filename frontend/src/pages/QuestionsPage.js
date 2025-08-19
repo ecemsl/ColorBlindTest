@@ -97,32 +97,24 @@ function QuestionsPage() {
     try {
       setGenLoading(true);
 
-      const res = await generateImage({
-        prompt: questionText?.trim() || 'ishihara color blindness test plates, white backgorund',
-        output_format: 'webp',
-        model: 'ultra'
-      }); // POST /api/images/generate
+      const res = await generateImage(); // POST /api/images/generate
       const { imageBase64, format } = res.data;
 
-      // Optional: see the size
-      console.log('len', imageBase64?.length, imageBase64?.slice(0, 30));
-
       // base64 → Blob → File
-      const bytes = Uint8Array.from(atob(imageBase64), c => c.charCodeAt(0));
-      const mime = `image/${format || 'png'}`;
-      const blob = new Blob([bytes], { type: mime });
-
-      // Give it a real filename; some backends rely on this
-      const file = new File([blob], `generated.${format || 'png'}`, { type: mime });
+      const ext = `image/${format || 'png'}`;
+      const imageContent = atob(imageBase64);
+      const buffer = new ArrayBuffer(imageContent.length);
+      const view = new Uint8Array(buffer);
+      for (let n = 0; n < imageContent.length; n++) view[n] = imageContent.charCodeAt(n);
+      const blob = new Blob([buffer], { type: ext }); 
+      const file = new File([blob], `generated.${format || 'png'}`, { type: ext });
 
       setImageFile(file);
-      setImagePreview(URL.createObjectURL(blob));
+      setImagePreview(URL.createObjectURL(blob)); // creates a string containing a blob URL
       showAlert('success', 'Image generated and attached.');
     } catch (e) {
       console.error(e);
-      showAlert('danger', 'Image generation failed.');
-      console.error(e);
-      const msg = e?.response?.data?.details || e?.response?.data?.error || e.message || 'Image generation failed.';
+      const msg = e?.response?.data?.details || 'Image generation failed.';
       showAlert('danger', msg);
     } finally {
       setGenLoading(false);
