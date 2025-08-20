@@ -110,7 +110,7 @@ function QuestionsPage() {
       const file = new File([blob], `generated.${format || 'png'}`, { type: ext });
 
       setImageFile(file);
-      setImagePreview(URL.createObjectURL(blob)); // creates a string containing a blob URL
+      setImagePreview(URL.createObjectURL(file)); // creates a string containing a blob URL
       showAlert('success', 'Image generated and attached.');
     } catch (e) {
       console.error(e);
